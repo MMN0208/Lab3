@@ -29,21 +29,25 @@ uint16_t buttonPin[NO_OF_BUTTONS] = {
 
 //debouncing
 static GPIO_PinState buttonBuffer[NO_OF_BUTTONS];
-//we define two buffers for debouncing
+//we define three buffers for debouncing
+static GPIO_PinState debounceButtonBuffer0[NO_OF_BUTTONS];
 static GPIO_PinState debounceButtonBuffer1[NO_OF_BUTTONS];
 static GPIO_PinState debounceButtonBuffer2[NO_OF_BUTTONS];
 //we define a flag for a button pressed more than 1 second.
 static uint8_t flagForButtonPress1s[NO_OF_BUTTONS];
+static uint8_t flagForButtonPress1s[NO_OF_BUTTONS];
 //we define counter for automatically increasing the value
 //after the button is pressed more than 1 second.
-static uint16_t counterForButtonPress1s[NO_OF_BUTTONS];
+static uint16_t counterForButtonPress1s[NO_OF_BUTTONS] = {};
 
 void button_reading(void){
 	for(int i = 0; i < NO_OF_BUTTONS; i++){
 		debounceButtonBuffer2[i] = debounceButtonBuffer1[i];
-		debounceButtonBuffer1[i] = HAL_GPIO_ReadPin(buttonPort[i], buttonPin[i]);
-		if(debounceButtonBuffer1[i] == debounceButtonBuffer2[i])
+		debounceButtonBuffer1[i] = debounceButtonBuffer0[i];
+		debounceButtonBuffer0[i] = HAL_GPIO_ReadPin(buttonPort[i], buttonPin[i]);
+		if((debounceButtonBuffer2[i] == debounceButtonBuffer1[i]) || (debounceButtonBuffer1[i] == debounceButtonBuffer0[i])) {
 			buttonBuffer[i] = debounceButtonBuffer1[i];
+		}
 		if(buttonBuffer[i] == BUTTON_IS_PRESSED){
 		//if a button is pressed, we start counting
 			if(counterForButtonPress1s[i] < DURATION_FOR_AUTO_INCREASING){
@@ -63,7 +67,9 @@ void button_reading(void){
 
 int is_button_pressed(int index){
 	if(index >= NO_OF_BUTTONS) return 0;
-	return (buttonBuffer[index] == BUTTON_IS_PRESSED);
+	GPIO_PinState temp = buttonBuffer[index];
+	buttonBuffer[index] = BUTTON_IS_RELEASED;
+	return (temp == BUTTON_IS_PRESSED);
 }
 
 int is_button_pressed_1s(int index){

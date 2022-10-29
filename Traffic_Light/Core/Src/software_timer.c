@@ -48,6 +48,10 @@ void setTimer3(int duration) {
 	timer3_flag = 0;
 }
 
+int getTrafficCounter(int index) {
+	return traffic_timer_counter[index];
+}
+
 void timerRun(void) {
 	for(int i = 0; i < NO_OF_EACH; i++) {
 		if(traffic_timer_counter[i] > 0) {

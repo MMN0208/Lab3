@@ -89,20 +89,14 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
-  setTimer1(10);
-  int index = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  fsm_automatic_run();
-	update7SEGBuffer();
-	  if(timer1_flag == 1) {
-		  setTimer1(100);
-		  display7SEG(index++);
-		  index %= 4;
+	  if(is_button_pressed(0)) {
+		  HAL_GPIO_TogglePin(RED_0_GPIO_Port, RED_0_Pin);
 	  }
     /* USER CODE END WHILE */
 
