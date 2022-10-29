@@ -4,8 +4,7 @@
  *  Created on: Oct 29, 2022
  *      Author: ADMIN
  */
-
-#include "main.h"
+#include "input_reading.h"
 //we aim to work with more than one buttons
 #define NO_OF_BUTTONS 				       3
 //timer interrupt duration is 10ms, so to pass 1 second,

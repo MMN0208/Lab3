@@ -5,8 +5,7 @@
  *      Author: ADMIN
  */
 
-#include "main.h"
-#include "input_reading.h"
+#include "input_processing.h"
 
 enum ButtonState{BUTTON_RELEASED, BUTTON_PRESSED, BUTTON_PRESSED_MORE_THAN_1_SECOND} ;
 

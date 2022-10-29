@@ -1,0 +1,3 @@
+../Core/Src/seven_seg_processing.c:75:6:display7SEG	24	static
+../Core/Src/seven_seg_processing.c:82:6:enable7SEG	24	static
+../Core/Src/seven_seg_processing.c:89:6:update7SEG	16	static

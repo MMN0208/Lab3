@@ -20,12 +20,12 @@
 #include "main.h"
 #include "tim.h"
 #include "gpio.h"
-#include "timer.h"
-#include "input_processing.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "software_timer.h"
+#include "input_processing.h"
+#include "seven_seg_processing.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -90,12 +90,20 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
+  setTimer1(1);
+  int index = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  fsm_for_input_processing();
+	  if(timer1_flag == 1) {
+		  setTimer1(10);
+		  update7SEG(index++);
+		  index %= MAX_7SEG_LEDS;
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -143,6 +151,7 @@ void SystemClock_Config(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	if(htim->Instance == TIM2) {
 		button_reading();
+		timerRun();
 	}
 }
 /* USER CODE END 4 */
