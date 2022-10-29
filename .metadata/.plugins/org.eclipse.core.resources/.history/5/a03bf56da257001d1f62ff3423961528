@@ -1,0 +1,28 @@
+/*
+ * global.h
+ *
+ *  Created on: Oct 29, 2022
+ *      Author: ADMIN
+ */
+
+#ifndef INC_GLOBAL_H_
+#define INC_GLOBAL_H_
+
+#include "software_timer.h"
+#include "input_processing.h"
+#include "seven_seg_processing.h"
+#include "traffic_light_processing.h"
+
+typedef enum  {
+	INIT,
+	AUTO_RED,
+	AUTO_GRN,
+	AUTO_YEL,
+	MAN_RED,
+	MAN_YEL,
+	MAN_GRN
+} state;
+
+extern state status;
+
+#endif /* INC_GLOBAL_H_ */

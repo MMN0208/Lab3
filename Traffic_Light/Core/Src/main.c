@@ -23,9 +23,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "software_timer.h"
-#include "input_processing.h"
-#include "seven_seg_processing.h"
+#include "global.h"
+#include "fsm_automatic.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -90,7 +89,7 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
-  setTimer1(1);
+  setTimer1(10);
   int index = 0;
   /* USER CODE END 2 */
 
@@ -98,11 +97,12 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  fsm_for_input_processing();
+	  fsm_automatic_run();
+	update7SEGBuffer();
 	  if(timer1_flag == 1) {
-		  setTimer1(10);
-		  update7SEG(index++);
-		  index %= MAX_7SEG_LEDS;
+		  setTimer1(100);
+		  display7SEG(index++);
+		  index %= 4;
 	  }
     /* USER CODE END WHILE */
 

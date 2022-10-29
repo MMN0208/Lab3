@@ -1,0 +1,55 @@
+/*
+ * fsm_automatic.c
+ *
+ *  Created on: Oct 29, 2022
+ *      Author: ADMIN
+ */
+
+#include "fsm_automatic.h"
+
+// variable to check the state of east / west lights
+int isGrn;
+
+void fsm_automatic_run(void) {
+	switch(status) {
+	case INIT:
+		allOff(SN_Lights);
+		allOff(EW_Lights);
+		setTimer1(getRedTime());
+		setTimer2(getGrnTime());
+		status = AUTO_RED;
+		isGrn = 1;
+		break;
+	case AUTO_RED:
+		redLight(SN_Lights);
+		if(timer1_flag == 1) {
+			setTimer1(getGrnTime());
+			status = AUTO_GRN;
+		}
+		if(timer2_flag == 1) {
+			if(isGrn) {
+				setTimer2(getYelTime());
+				isGrn = 0;
+			}
+			else {
+				setTimer2
+			}
+		}
+		break;
+	case AUTO_GRN:
+		grnLight(0);
+		if(timer1_flag == 1) {
+			setTimer1(getYelTime());
+			status = AUTO_YEL;
+		}
+		break;
+	case AUTO_YEL:
+		yelLight(0);
+		if(timer1_flag == 1) {
+			setTimer1(getRedTime());
+			status = AUTO_RED;
+		}
+		break;
+	default: break;
+	}
+}

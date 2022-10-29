@@ -69,10 +69,10 @@ const uint8_t sevenSegEnable[MAX_7SEG_LEDS] = {
 };
 
 //seven segment buffer
-int seven_seg_buffer[MAX_7SEG_LEDS] = {2, 0, 0, 2};
+int seven_seg_buffer[MAX_7SEG_LEDS];
 
 //seven segment functions
-void display7SEG(int num) {
+void driver7SEG(int num) {
 	if(num < 0 || num > 9) return;
 	for(int i = 0; i < NO_OF_SEGMENTS; i++) {
 		HAL_GPIO_WritePin(sevenSegPort[i], sevenSegPin[i], (sevenSegValue[num] >> i) & 0x01);
@@ -86,8 +86,15 @@ void enable7SEG(int index) {
 	}
 }
 
-void update7SEG(int index) {
+void update7SEGBuffer() {
+	seven_seg_buffer[0] = (traffic_timer_counter[0] / (1000 / SYSTEM_DELAY)) / 10;
+	seven_seg_buffer[1] = (traffic_timer_counter[0] / (1000 / SYSTEM_DELAY)) % 10;
+	seven_seg_buffer[2] = (traffic_timer_counter[1] / (1000 / SYSTEM_DELAY)) / 10;
+	seven_seg_buffer[3] = (traffic_timer_counter[1] / (1000 / SYSTEM_DELAY)) % 10;
+}
+
+void display7SEG(int index) {
 	if(index < 0 || index >= MAX_7SEG_LEDS) return;
 	enable7SEG(index);
-	display7SEG(seven_seg_buffer[index]);
+	driver7SEG(seven_seg_buffer[index]);
 }

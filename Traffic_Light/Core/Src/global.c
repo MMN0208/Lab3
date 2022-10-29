@@ -6,3 +6,6 @@
  */
 
 #include "global.h"
+
+systemState status = MODE1;
+lightState lightStatus[NO_OF_EACH] = {INIT, INIT};

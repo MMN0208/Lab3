@@ -1,0 +1,58 @@
+/*
+ * fsm_automatic.c
+ *
+ *  Created on: Oct 29, 2022
+ *      Author: ADMIN
+ */
+
+#include "fsm_automatic.h"
+
+void fsm_automatic_run(void) {
+	for(int i = 0; i < NO_OF_EACH; i++) {
+		switch(status) {
+		case INIT:
+			allOff(i);
+			if(i == 0) {
+				lightStatus[i] = RED;
+				setTrafficTimer(i, getRedTime());
+			}
+			else {
+				lightStatus[i] = GRN;
+				setTrafficTimer(i, getGrnTime());
+			}
+			break;
+		case RED:
+			redLight(i);
+			if(timer1_flag == 1) {
+				setTimer1(getGrnTime());
+				lightStatus[0] = GRN;
+			}
+			if(timer2_flag == 1) {
+				setTimer2(getGrnTime());
+				lightStatus[1] = GRN;
+			}
+			break;
+		case GRN:
+			grnLight(SN_Lights);
+			redLight(EW_Lights);
+			if(timer1_flag == 1) {
+				setTimer1(getYelTime());
+				status = AUTO_YEL;
+			}
+			break;
+		case YEL:
+			yelLight(SN_Lights);
+			redLight(EW_Lights);
+			if(timer1_flag == 1) {
+				setTimer1(getRedTime());
+				status = AUTO_RED;
+			}
+			if(timer2_flag == 1) {
+				setTimer2(getGrnTime());
+				isGrn = 1;
+			}
+			break;
+		default: break;
+		}
+	}
+}

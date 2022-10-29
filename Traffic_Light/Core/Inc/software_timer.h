@@ -8,13 +8,21 @@
 #ifndef INC_SOFTWARE_TIMER_H_
 #define INC_SOFTWARE_TIMER_H_
 
+#include "traffic_light_processing.h"
+
+#define SYSTEM_DELAY 	10 // 10ms
+
+extern int traffic_timer_flag[NO_OF_EACH];
+extern int traffic_timer_counter[NO_OF_EACH];
 extern int timer1_flag;
 extern int timer2_flag;
 extern int timer3_flag;
 
+void setTrafficTimer(int index, int duration);
 void setTimer1(int duration);
 void setTimer2(int duration);
 void setTimer3(int duration);
+
 void timerRun(void);
 
 #endif /* INC_SOFTWARE_TIMER_H_ */

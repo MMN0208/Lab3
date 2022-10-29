@@ -9,9 +9,11 @@
 #define INC_SEVEN_SEG_PROCESSING_H_
 
 #include "main.h"
+#include "software_timer.h"
 
 #define MAX_7SEG_LEDS	4
 
-void update7SEG(int index);
+void update7SEGBuffer();
+void display7SEG(int index);
 
 #endif /* INC_SEVEN_SEG_PROCESSING_H_ */

@@ -1,0 +1,54 @@
+/*
+ * traffic_light_processing.c
+ *
+ *  Created on: Oct 29, 2022
+ *      Author: ADMIN
+ */
+
+#include "traffic_light_processing.h"
+
+#define NO_OF_EACH	2
+
+//red light ports and pins
+GPIO_TypeDef * redPort[NO_OF_EACH] = {
+	RED_0_GPIO_Port,
+	RED_1_GPIO_Port
+};
+
+uint16_t redPin[NO_OF_EACH] = {
+	RED_0_Pin,
+	RED_1_Pin
+};
+
+//yel light ports and pins
+GPIO_TypeDef * yelPort[NO_OF_EACH] = {
+	YEL_0_GPIO_Port,
+	YEL_1_GPIO_Port
+};
+
+uint16_t yelPin[NO_OF_EACH] = {
+	YEL_0_Pin,
+	YEL_1_Pin
+};
+
+//grn light ports and pins
+GPIO_TypeDef * grnPort[NO_OF_EACH] = {
+	GRN_0_GPIO_Port,
+	GRN_1_GPIO_Port
+};
+
+uint16_t grnPin[NO_OF_EACH] = {
+	GRN_0_Pin,
+	GRN_1_Pin
+};
+
+//initial time for red, yel, grn lights
+int redTime = 5;
+int yelTime = 2;
+int grnTime = 3;
+
+void redLight(int index) {
+	HAL_GPIO_WritePin(GPIOx, GPIO_Pin, PinState)
+}
+void yelLight(int index);
+void grnLight(int index);

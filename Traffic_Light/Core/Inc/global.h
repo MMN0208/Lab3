@@ -8,16 +8,26 @@
 #ifndef INC_GLOBAL_H_
 #define INC_GLOBAL_H_
 
+#include "software_timer.h"
+#include "input_processing.h"
+#include "seven_seg_processing.h"
+#include "traffic_light_processing.h"
+
+typedef enum  {
+	MODE1,
+	MODE2,
+	MODE3,
+	MODE4
+} systemState;
+
 typedef enum  {
 	INIT,
-	AUTO_RED,
-	AUTO_GRN,
-	AUTO_YEL,
-	MAN_RED,
-	MAN_YEL,
-	MAN_GRN
-} state;
+	RED,
+	YEL,
+	GRN
+} lightState;
 
-extern int status;
+extern systemState status;
+extern lightState lightStatus[NO_OF_EACH];
 
 #endif /* INC_GLOBAL_H_ */

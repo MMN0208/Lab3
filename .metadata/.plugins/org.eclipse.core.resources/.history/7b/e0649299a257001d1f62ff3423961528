@@ -1,0 +1,25 @@
+/*
+ * global.h
+ *
+ *  Created on: Oct 29, 2022
+ *      Author: ADMIN
+ */
+
+#ifndef INC_GLOBAL_H_
+#define INC_GLOBAL_H_
+
+#include "software_timer.h"
+#include "input_processing.h"
+#include "seven_seg_processing.h"
+#include "traffic_light_processing.h"
+
+typedef enum  {
+	MODE1,
+	MODE2,
+	MODE3,
+	MODE4
+} systemState;
+
+extern systemState status;
+
+#endif /* INC_GLOBAL_H_ */

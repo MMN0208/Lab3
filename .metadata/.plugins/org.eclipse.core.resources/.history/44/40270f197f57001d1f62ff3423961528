@@ -1,0 +1,13 @@
+/*
+ * traffic_light_processing.c
+ *
+ *  Created on: Oct 29, 2022
+ *      Author: ADMIN
+ */
+
+#include "traffic_light_processing.h"
+
+int redTime = 5;
+int yelTime = 2;
+int grnTime = 3;
+

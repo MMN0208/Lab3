@@ -1,0 +1,41 @@
+/*
+ * fsm_automatic.c
+ *
+ *  Created on: Oct 29, 2022
+ *      Author: ADMIN
+ */
+
+#include "fsm_automatic.h"
+
+void fsm_automatic_run(void) {
+	switch(status) {
+	case INIT:
+		allOff(0);
+		allOff(1);
+		setTimer1(getRedTime());
+		status = RED_GRN;
+		break;
+	case RED_GRN:
+		redLight(0);
+		if(timer1_flag == 1) {
+			setTimer1(getGrnTime());
+			status = AUTO_GRN;
+		}
+		break;
+	case AUTO_GRN:
+		grnLight(0);
+		if(timer1_flag == 1) {
+			setTimer1(getYelTime());
+			status = AUTO_YEL;
+		}
+		break;
+	case AUTO_YEL:
+		yelLight(0);
+		if(timer1_flag == 1) {
+			setTimer1(getRedTime());
+			status = AUTO_RED;
+		}
+		break;
+	default: break;
+	}
+}
