@@ -1,0 +1,15 @@
+/*
+ * fsm_for_mode_switching.h
+ *
+ *  Created on: Oct 30, 2022
+ *      Author: ADMIN
+ */
+
+#ifndef INC_FSM_FOR_MODE_SWITCHING_H_
+#define INC_FSM_FOR_MODE_SWITCHING_H_
+
+#include "global.h"
+
+void fsm_for_
+
+#endif /* INC_FSM_FOR_MODE_SWITCHING_H_ */

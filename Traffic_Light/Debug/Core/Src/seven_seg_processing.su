@@ -1,4 +1,6 @@
-../Core/Src/seven_seg_processing.c:75:6:driver7SEG	24	static
-../Core/Src/seven_seg_processing.c:82:6:enable7SEG	24	static
-../Core/Src/seven_seg_processing.c:89:6:update7SEGBuffer	4	static
-../Core/Src/seven_seg_processing.c:96:6:display7SEG	16	static
+../Core/Src/seven_seg_processing.c:83:6:driver7SEG	24	static
+../Core/Src/seven_seg_processing.c:90:6:enable7SEG	24	static
+../Core/Src/seven_seg_processing.c:97:6:updateCountdownBuffer	8	static
+../Core/Src/seven_seg_processing.c:104:6:display7SEG	16	static
+../Core/Src/seven_seg_processing.c:110:6:scan7SEG	8	static
+../Core/Src/seven_seg_processing.c:118:6:reset7SEGIndex	4	static

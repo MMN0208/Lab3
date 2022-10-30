@@ -72,6 +72,21 @@ void grnLight(int index) {
 	HAL_GPIO_WritePin(grnPort[index], grnPin[index], ON);
 }
 
+void redBlink(void) {
+	HAL_GPIO_TogglePin(redPort[0], redPin[0]);
+	HAL_GPIO_TogglePin(redPort[1], redPin[1]);
+}
+
+void yelBlink(void) {
+	HAL_GPIO_TogglePin(yelPort[0], yelPin[0]);
+	HAL_GPIO_TogglePin(yelPort[1], yelPin[1]);
+}
+
+void grnBlink(void) {
+	HAL_GPIO_TogglePin(grnPort[0], grnPin[0]);
+	HAL_GPIO_TogglePin(grnPort[1], grnPin[1]);
+}
+
 int getRedTime(void) {
 	return redTime * SECOND;
 }

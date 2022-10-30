@@ -14,6 +14,7 @@
 #include "traffic_light_processing.h"
 
 typedef enum  {
+	STARTUP,
 	MODE1,
 	MODE2,
 	MODE3,

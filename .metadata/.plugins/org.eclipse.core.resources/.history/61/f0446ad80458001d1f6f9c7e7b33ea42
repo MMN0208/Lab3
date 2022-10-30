@@ -1,0 +1,12 @@
+/*
+ * fsm_for_mode_switching.c
+ *
+ *  Created on: Oct 30, 2022
+ *      Author: ADMIN
+ */
+
+#include "fsm_for_multi_mode.h"
+
+void fsm_for_multi_mode_run(void) {
+
+}

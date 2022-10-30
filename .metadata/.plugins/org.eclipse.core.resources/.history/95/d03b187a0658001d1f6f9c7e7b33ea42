@@ -1,0 +1,31 @@
+/*
+ * fsm_for_mode_switching.c
+ *
+ *  Created on: Oct 30, 2022
+ *      Author: ADMIN
+ */
+
+#include "fsm_for_multi_mode.h"
+
+#define TIMER_INIT 	10 // 10ms
+
+int seven_seg_index = 0;
+
+void fsm_multi_mode_run(void) {
+	switch(status) {
+	case STARTUP:
+		setTimer1(TIMER_INIT);
+		status = MODE1;
+		break;
+	case MODE1:
+		fsm_automatic_run();
+		updateCountdownBuffer();
+		if(timer1_flag == 1) {
+			setTimer1(LED_SCAN_PERIOD);
+			display7SEG(seven_seg_index++);
+			seven_seg_index %= MAX_7SEG_LEDS;
+		}
+		break;
+	default: break;
+	}
+}

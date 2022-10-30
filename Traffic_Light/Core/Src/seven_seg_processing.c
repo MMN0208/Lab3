@@ -9,6 +9,13 @@
 
 #define NO_OF_SEGMENTS	7
 #define NO_OF_VALUES 	10
+#define SECOND 			1000 // 1s = 1000ms
+#define FIRST_ELEM		0
+#define SECOND_ELEM		1
+#define	THIRD_ELEM		2
+#define FOURTH_ELEM		3
+#define SN_COUNTER		0
+#define EW_COUNTER		1
 
 //seven segment ports and pins
 GPIO_TypeDef * sevenSegPort[NO_OF_SEGMENTS] = {
@@ -70,6 +77,7 @@ const uint8_t sevenSegEnable[MAX_7SEG_LEDS] = {
 
 //seven segment buffer
 int seven_seg_buffer[MAX_7SEG_LEDS];
+int seven_seg_index = 0;
 
 //seven segment functions
 void driver7SEG(int num) {
@@ -86,15 +94,27 @@ void enable7SEG(int index) {
 	}
 }
 
-void update7SEGBuffer() {
-	seven_seg_buffer[0] = (traffic_timer_counter[0] / (1000 / SYSTEM_DELAY)) / 10;
-	seven_seg_buffer[1] = (traffic_timer_counter[0] / (1000 / SYSTEM_DELAY)) % 10;
-	seven_seg_buffer[2] = (traffic_timer_counter[1] / (1000 / SYSTEM_DELAY)) / 10;
-	seven_seg_buffer[3] = (traffic_timer_counter[1] / (1000 / SYSTEM_DELAY)) % 10;
+void updateCountdownBuffer(void) {
+	seven_seg_buffer[FIRST_ELEM] = (getTrafficCounter(SN_COUNTER) / (SECOND / SYSTEM_DELAY)) / 10;
+	seven_seg_buffer[SECOND_ELEM] = (getTrafficCounter(SN_COUNTER) / (SECOND / SYSTEM_DELAY)) % 10;
+	seven_seg_buffer[THIRD_ELEM] = (getTrafficCounter(EW_COUNTER) / (SECOND / SYSTEM_DELAY)) / 10;
+	seven_seg_buffer[FOURTH_ELEM] = (getTrafficCounter(EW_COUNTER) / (SECOND / SYSTEM_DELAY)) % 10;
 }
 
 void display7SEG(int index) {
 	if(index < 0 || index >= MAX_7SEG_LEDS) return;
 	enable7SEG(index);
 	driver7SEG(seven_seg_buffer[index]);
+}
+
+void scan7SEG(void) {
+	if(timer1_flag == 1) {
+		setTimer1(LED_SCAN_PERIOD);
+		display7SEG(seven_seg_index++);
+		seven_seg_index %= MAX_7SEG_LEDS;
+	}
+}
+
+void reset7SEGIndex(void){
+	seven_seg_index = 0;
 }

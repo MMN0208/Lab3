@@ -12,8 +12,10 @@
 #include "software_timer.h"
 
 #define MAX_7SEG_LEDS	4
+#define LED_SCAN_PERIOD	250
 
-void update7SEGBuffer();
-void display7SEG(int index);
+void updateCountdownBuffer(void);
+void scan7SEG(void);
+void reset7SEGIndex(void);
 
 #endif /* INC_SEVEN_SEG_PROCESSING_H_ */

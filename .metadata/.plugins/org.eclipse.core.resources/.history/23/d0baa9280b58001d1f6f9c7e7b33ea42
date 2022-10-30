@@ -1,0 +1,25 @@
+/*
+ * fsm_for_mode_switching.c
+ *
+ *  Created on: Oct 30, 2022
+ *      Author: ADMIN
+ */
+
+#include "fsm_for_multi_mode.h"
+
+#define TIMER_INIT 	10 // 10ms
+
+void fsm_multi_mode_run(void) {
+	switch(status) {
+	case STARTUP:
+		setTimer1(TIMER_INIT);
+		status = MODE1;
+		break;
+	case MODE1:
+		fsm_automatic_run();
+		updateCountdownBuffer();
+		scan7SEG();
+		break;
+	default: break;
+	}
+}

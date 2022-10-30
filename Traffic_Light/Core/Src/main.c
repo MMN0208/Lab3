@@ -25,6 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include "global.h"
 #include "fsm_automatic.h"
+#include "fsm_for_multi_mode.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -95,9 +96,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if(is_button_pressed(0)) {
-		  HAL_GPIO_TogglePin(RED_0_GPIO_Port, RED_0_Pin);
-	  }
+	  fsm_multi_mode_run();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

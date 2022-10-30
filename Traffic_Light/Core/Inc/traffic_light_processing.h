@@ -17,6 +17,10 @@ void redLight(int index);
 void yelLight(int index);
 void grnLight(int index);
 
+void redBlink(void);
+void yelBlink(void);
+void grnBlink(void);
+
 int getRedTime(void);
 int getYelTime(void);
 int getGrnTime(void);

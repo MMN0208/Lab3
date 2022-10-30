@@ -20,7 +20,6 @@ void fsm_for_input_processing(void){
 		}
 		break;
 	case BUTTON_PRESSED:
-		HAL_GPIO_TogglePin(RED_0_GPIO_Port, RED_0_Pin);
 		if(!is_button_pressed(0)){
 			buttonState = BUTTON_RELEASED;
 		} else {

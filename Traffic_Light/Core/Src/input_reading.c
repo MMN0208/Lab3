@@ -28,17 +28,17 @@ uint16_t buttonPin[NO_OF_BUTTONS] = {
 };
 
 //debouncing
-static GPIO_PinState buttonBuffer[NO_OF_BUTTONS];
+static GPIO_PinState buttonBuffer[NO_OF_BUTTONS] = {BUTTON_IS_RELEASED, BUTTON_IS_RELEASED, BUTTON_IS_RELEASED};
 //we define three buffers for debouncing
-static GPIO_PinState debounceButtonBuffer0[NO_OF_BUTTONS];
-static GPIO_PinState debounceButtonBuffer1[NO_OF_BUTTONS];
-static GPIO_PinState debounceButtonBuffer2[NO_OF_BUTTONS];
+static GPIO_PinState debounceButtonBuffer0[NO_OF_BUTTONS] = {BUTTON_IS_RELEASED, BUTTON_IS_RELEASED, BUTTON_IS_RELEASED};
+static GPIO_PinState debounceButtonBuffer1[NO_OF_BUTTONS] = {BUTTON_IS_RELEASED, BUTTON_IS_RELEASED, BUTTON_IS_RELEASED};
+static GPIO_PinState debounceButtonBuffer2[NO_OF_BUTTONS] = {BUTTON_IS_RELEASED, BUTTON_IS_RELEASED, BUTTON_IS_RELEASED};
 //we define a flag for a button pressed more than 1 second.
 static uint8_t flagForButtonPress1s[NO_OF_BUTTONS];
 static uint8_t flagForButtonPress1s[NO_OF_BUTTONS];
 //we define counter for automatically increasing the value
 //after the button is pressed more than 1 second.
-static uint16_t counterForButtonPress1s[NO_OF_BUTTONS] = {};
+static uint16_t counterForButtonPress1s[NO_OF_BUTTONS] = {0, 0, 0};
 
 void button_reading(void){
 	for(int i = 0; i < NO_OF_BUTTONS; i++){
@@ -67,9 +67,7 @@ void button_reading(void){
 
 int is_button_pressed(int index){
 	if(index >= NO_OF_BUTTONS) return 0;
-	GPIO_PinState temp = buttonBuffer[index];
-	buttonBuffer[index] = BUTTON_IS_RELEASED;
-	return (temp == BUTTON_IS_PRESSED);
+	return (buttonBuffer[index] == BUTTON_IS_PRESSED);
 }
 
 int is_button_pressed_1s(int index){
