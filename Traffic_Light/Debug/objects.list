@@ -1,8 +1,6 @@
-"./Core/Src/fsm_automatic.o"
 "./Core/Src/fsm_for_multi_mode.o"
 "./Core/Src/global.o"
 "./Core/Src/gpio.o"
-"./Core/Src/input_processing.o"
 "./Core/Src/input_reading.o"
 "./Core/Src/main.o"
 "./Core/Src/seven_seg_processing.o"

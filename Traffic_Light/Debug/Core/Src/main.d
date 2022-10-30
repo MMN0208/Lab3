@@ -25,10 +25,10 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Core/Inc/tim.h ../Core/Inc/main.h ../Core/Inc/gpio.h \
  ../Core/Inc/global.h ../Core/Inc/software_timer.h \
- ../Core/Inc/traffic_light_processing.h ../Core/Inc/input_processing.h \
- ../Core/Inc/input_reading.h ../Core/Inc/seven_seg_processing.h \
- ../Core/Inc/fsm_automatic.h ../Core/Inc/global.h \
- ../Core/Inc/fsm_for_multi_mode.h ../Core/Inc/fsm_automatic.h
+ ../Core/Inc/traffic_light_processing.h \
+ ../Core/Inc/seven_seg_processing.h ../Core/Inc/input_reading.h \
+ ../Core/Inc/fsm_for_multi_mode.h ../Core/Inc/global.h \
+ ../Core/Inc/input_reading.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../Core/Inc/stm32f1xx_hal_conf.h:
@@ -60,10 +60,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/global.h:
 ../Core/Inc/software_timer.h:
 ../Core/Inc/traffic_light_processing.h:
-../Core/Inc/input_processing.h:
-../Core/Inc/input_reading.h:
 ../Core/Inc/seven_seg_processing.h:
-../Core/Inc/fsm_automatic.h:
-../Core/Inc/global.h:
+../Core/Inc/input_reading.h:
 ../Core/Inc/fsm_for_multi_mode.h:
-../Core/Inc/fsm_automatic.h:
+../Core/Inc/global.h:
+../Core/Inc/input_reading.h:

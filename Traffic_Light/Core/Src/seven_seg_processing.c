@@ -9,13 +9,13 @@
 
 #define NO_OF_SEGMENTS	7
 #define NO_OF_VALUES 	10
+
 #define SECOND 			1000 // 1s = 1000ms
+
 #define FIRST_ELEM		0
 #define SECOND_ELEM		1
 #define	THIRD_ELEM		2
 #define FOURTH_ELEM		3
-#define SN_COUNTER		0
-#define EW_COUNTER		1
 
 //seven segment ports and pins
 GPIO_TypeDef * sevenSegPort[NO_OF_SEGMENTS] = {
@@ -95,10 +95,20 @@ void enable7SEG(int index) {
 }
 
 void updateCountdownBuffer(void) {
-	seven_seg_buffer[FIRST_ELEM] = (getTrafficCounter(SN_COUNTER) / (SECOND / SYSTEM_DELAY)) / 10;
-	seven_seg_buffer[SECOND_ELEM] = (getTrafficCounter(SN_COUNTER) / (SECOND / SYSTEM_DELAY)) % 10;
-	seven_seg_buffer[THIRD_ELEM] = (getTrafficCounter(EW_COUNTER) / (SECOND / SYSTEM_DELAY)) / 10;
-	seven_seg_buffer[FOURTH_ELEM] = (getTrafficCounter(EW_COUNTER) / (SECOND / SYSTEM_DELAY)) % 10;
+	seven_seg_buffer[FIRST_ELEM] = getCountdown(SOUTH_NORTH) / 10;
+	seven_seg_buffer[SECOND_ELEM] = getCountdown(SOUTH_NORTH) % 10;
+	seven_seg_buffer[THIRD_ELEM] = getCountdown(EAST_WEST) / 10;
+	seven_seg_buffer[FOURTH_ELEM] = getCountdown(EAST_WEST) % 10;
+}
+
+void updateTimeBuffer(int time) {
+	seven_seg_buffer[FIRST_ELEM] = time / 10;
+	seven_seg_buffer[SECOND_ELEM] = time % 10;
+}
+
+void updateModeBuffer(int mode) {
+	seven_seg_buffer[THIRD_ELEM] = mode / 10;
+	seven_seg_buffer[FOURTH_ELEM] = mode % 10;
 }
 
 void display7SEG(int index) {

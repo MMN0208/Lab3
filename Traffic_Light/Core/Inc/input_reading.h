@@ -9,9 +9,9 @@
 #define INC_INPUT_READING_H_
 
 #include "main.h"
+#include "software_timer.h"
 
 void button_reading(void);
 int is_button_pressed(int index);
-int is_button_pressed_1s(int index);
 
 #endif /* INC_INPUT_READING_H_ */

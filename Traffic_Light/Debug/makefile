@@ -66,8 +66,8 @@ all: main-build
 main-build: Traffic_Light.elf secondary-outputs
 
 # Tool invocations
-Traffic_Light.elf Traffic_Light.map: $(OBJS) $(USER_OBJS) C:\Users\ADMIN\Documents\MCU\Lab3\Traffic_Light\STM32F103C6UX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Traffic_Light.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\ADMIN\Documents\MCU\Lab3\Traffic_Light\STM32F103C6UX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Traffic_Light.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Traffic_Light.elf Traffic_Light.map: $(OBJS) $(USER_OBJS) /Users/nhatmai/Documents/Semester\ 221/Microcontroller\ -\ Microprocessor/Lab3/Traffic_Light/STM32F103C6UX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Traffic_Light.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/Users/nhatmai/Documents/Semester 221/Microcontroller - Microprocessor/Lab3/Traffic_Light/STM32F103C6UX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Traffic_Light.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

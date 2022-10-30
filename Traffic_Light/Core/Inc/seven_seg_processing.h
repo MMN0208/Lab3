@@ -15,6 +15,8 @@
 #define LED_SCAN_PERIOD	250
 
 void updateCountdownBuffer(void);
+void updateTimeBuffer(int time);
+void updateModeBuffer(int mode);
 void scan7SEG(void);
 void reset7SEGIndex(void);
 

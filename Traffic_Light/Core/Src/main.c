@@ -24,7 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "global.h"
-#include "fsm_automatic.h"
+#include "input_reading.h"
 #include "fsm_for_multi_mode.h"
 /* USER CODE END Includes */
 

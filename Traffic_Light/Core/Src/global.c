@@ -7,5 +7,4 @@
 
 #include "global.h"
 
-systemState status = STARTUP;
-lightState lightStatus[NO_OF_EACH] = {INIT, INIT};
+systemState status = INIT;

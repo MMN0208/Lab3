@@ -12,17 +12,15 @@
 
 #define SYSTEM_DELAY 	10 // 10ms
 
-extern int traffic_timer_flag[NO_OF_EACH];
+extern int traffic_timer_flag;
 extern int timer1_flag;
 extern int timer2_flag;
 extern int timer3_flag;
 
-void setTrafficTimer(int index, int duration);
+void setTrafficTimer(int duration);
 void setTimer1(int duration);
 void setTimer2(int duration);
 void setTimer3(int duration);
-
-int getTrafficCounter(int index);
 
 void timerRun(void);
 

@@ -2,5 +2,4 @@
 ../Core/Src/software_timer.c:29:6:setTimer1	16	static
 ../Core/Src/software_timer.c:36:6:setTimer2	16	static
 ../Core/Src/software_timer.c:44:6:setTimer3	16	static
-../Core/Src/software_timer.c:51:5:getTrafficCounter	16	static
-../Core/Src/software_timer.c:55:6:timerRun	16	static
+../Core/Src/software_timer.c:51:6:timerRun	4	static

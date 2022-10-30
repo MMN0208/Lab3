@@ -7,8 +7,8 @@
 
 #include "software_timer.h"
 
-int traffic_timer_flag[NO_OF_EACH] = {0, 0};
-int traffic_timer_counter[NO_OF_EACH] = {0, 0};
+int traffic_timer_flag = 0;
+int traffic_timer_counter = 0;
 
 int timer1_counter = 0;
 int timer1_flag = 0;
@@ -19,11 +19,11 @@ int timer2_flag = 0;
 int timer3_counter = 0;
 int timer3_flag = 0;
 
-void setTrafficTimer(int index, int duration) {
+void setTrafficTimer(int duration) {
 	if(SYSTEM_DELAY > 0) {
-		traffic_timer_counter[index] = duration / SYSTEM_DELAY;
-	} else traffic_timer_counter[index] = duration;
-	traffic_timer_flag[index] = 0;
+		traffic_timer_counter= duration / SYSTEM_DELAY;
+	} else traffic_timer_counter = duration;
+	traffic_timer_flag = 0;
 }
 
 void setTimer1(int duration) {
@@ -48,17 +48,11 @@ void setTimer3(int duration) {
 	timer3_flag = 0;
 }
 
-int getTrafficCounter(int index) {
-	return traffic_timer_counter[index];
-}
-
 void timerRun(void) {
-	for(int i = 0; i < NO_OF_EACH; i++) {
-		if(traffic_timer_counter[i] > 0) {
-			traffic_timer_counter[i]--;
-			if(traffic_timer_counter[i] <= 0) {
-				traffic_timer_flag[i] = 1;
-			}
+	if(traffic_timer_counter > 0) {
+		traffic_timer_counter--;
+		if(traffic_timer_counter <= 0) {
+			traffic_timer_flag = 1;
 		}
 	}
 

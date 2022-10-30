@@ -47,7 +47,11 @@ uint16_t grnPin[NO_OF_EACH] = {
 //initial time for red, yel, grn lights
 int redTime = 15;
 int yelTime = 3;
-int grnTime = 10;
+int grnTime = 12;
+
+//count-down for south/north, east/west lights
+int snCountdown = 0;
+int ewCountdown = 0;
 
 void allOff(int index) {
 	HAL_GPIO_WritePin(redPort[index], redPin[index], OFF);
@@ -72,19 +76,20 @@ void grnLight(int index) {
 	HAL_GPIO_WritePin(grnPort[index], grnPin[index], ON);
 }
 
-void redBlink(void) {
-	HAL_GPIO_TogglePin(redPort[0], redPin[0]);
-	HAL_GPIO_TogglePin(redPort[1], redPin[1]);
-}
-
 void yelBlink(void) {
-	HAL_GPIO_TogglePin(yelPort[0], yelPin[0]);
-	HAL_GPIO_TogglePin(yelPort[1], yelPin[1]);
+	for(int i = 0; i < NO_OF_EACH; i++) {
+		HAL_GPIO_WritePin(redPort[i], redPin[i], OFF);
+		HAL_GPIO_TogglePin(yelPort[i], yelPin[i]);
+		HAL_GPIO_WritePin(grnPort[i], grnPin[i], OFF);
+	}
 }
 
 void grnBlink(void) {
-	HAL_GPIO_TogglePin(grnPort[0], grnPin[0]);
-	HAL_GPIO_TogglePin(grnPort[1], grnPin[1]);
+	for(int i = 0; i < NO_OF_EACH; i++) {
+		HAL_GPIO_WritePin(redPort[i], redPin[i], OFF);
+		HAL_GPIO_WritePin(yelPort[i], yelPin[i], OFF);
+		HAL_GPIO_TogglePin(grnPort[i], grnPin[i]);
+	}
 }
 
 int getRedTime(void) {
@@ -99,8 +104,33 @@ int getGrnTime(void) {
 	return grnTime * SECOND;
 }
 
-void updateRedTime(int time) {
-	redTime = time;
+void setCountdown(int direction, int duration) {
+	if(duration <= 0) return;
+	if(direction == SOUTH_NORTH) {
+		snCountdown = duration / SECOND;
+	}
+	else if(direction == EAST_WEST) {
+		ewCountdown = duration / SECOND;
+	}
+}
+
+void updateCountdown() {
+	if(snCountdown > 0) snCountdown--;
+	if(ewCountdown >0) ewCountdown--;
+}
+
+int getCountdown(int direction) {
+	if(direction == SOUTH_NORTH) {
+		return snCountdown;
+	}
+	else if(direction == EAST_WEST) {
+		return ewCountdown;
+	}
+	return -1;
+}
+
+void updateRedTime(void) {
+	redTime = yelTime + grnTime;
 }
 
 void updateYelTime(int time) {

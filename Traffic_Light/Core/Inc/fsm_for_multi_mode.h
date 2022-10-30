@@ -9,7 +9,7 @@
 #define INC_FSM_FOR_MULTI_MODE_H_
 
 #include "global.h"
-#include "fsm_automatic.h"
+#include "input_reading.h"
 
 void fsm_multi_mode_run(void);
 
