@@ -13,7 +13,7 @@
 #include "traffic_light_processing.h"
 
 typedef enum  {
-	STARTUP,
+	INIT,
 	MODE1,
 	MODE2,
 	MODE3,
@@ -28,6 +28,5 @@ typedef enum  {
 } lightState;
 
 extern systemState status;
-extern lightState lightStatus[NO_OF_EACH];
 
 #endif /* INC_GLOBAL_H_ */
