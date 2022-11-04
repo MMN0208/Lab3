@@ -13,5 +13,8 @@
 
 void button_reading(void);
 int is_button_pressed(int index);
+int is_button_double_pressed(int index);
+int is_button_hold(int index);
+
 
 #endif /* INC_INPUT_READING_H_ */

@@ -8,8 +8,12 @@
 //we aim to work with more than one buttons
 #define NO_OF_BUTTONS 				       3
 //timer interrupt duration is 10ms, so to pass 1 second,
-//we need to jump to the interrupt service routine 100 time
+//time for auto-increasing
 #define DURATION_FOR_AUTO_INCREASING	   500
+//time to register hold
+#define DURATION_FOR_BUTTON_HOLD		   1000
+//time interval inbetween each press to detect double press
+#define DURATION_FOR_DOUBLE_PRESS		   500
 #define BUTTON_IS_PRESSED                  GPIO_PIN_RESET
 #define BUTTON_IS_RELEASED                 GPIO_PIN_SET
 //the buffer that the final result is stored after
@@ -35,9 +39,13 @@ static GPIO_PinState debounceButtonBuffer1[NO_OF_BUTTONS] = {BUTTON_IS_RELEASED,
 static GPIO_PinState debounceButtonBuffer2[NO_OF_BUTTONS] = {BUTTON_IS_RELEASED, BUTTON_IS_RELEASED, BUTTON_IS_RELEASED};
 //we define a flag for a button pressed more than 1 second.
 static uint8_t flagForButtonPressed[NO_OF_BUTTONS];
+static uint8_t flagForButtonDoublePressed[NO_OF_BUTTONS];
+static uint8_t flagForButtonHold[NO_OF_BUTTONS];
 //we define counter for automatically increasing the value
 //after the button is pressed more than 1 second.
 static uint16_t counterForButtonHold[NO_OF_BUTTONS] = {0, 0, 0};
+static uint16_t counterForAutoIncreasing[NO_OF_BUTTONS] = {0, 0, 0};
+static uint16_t waitForSecondPress[NO_OF_BUTTONS] = {0, 0, 0};
 
 void button_reading(void){
 	for(int i = 0; i < NO_OF_BUTTONS; i++) {
@@ -48,25 +56,76 @@ void button_reading(void){
 			if(buttonBuffer[i] != debounceButtonBuffer0[i]) {
 				buttonBuffer[i] = debounceButtonBuffer0[i];
 				if(buttonBuffer[i] == BUTTON_IS_PRESSED) {
-					counterForButtonHold[i] = DURATION_FOR_AUTO_INCREASING;
-					if(SYSTEM_DELAY > 0) counterForButtonHold[i] /= SYSTEM_DELAY;
+					if(!flagButtonHold[i]) {
+						counterForButtonHold[i] = DURATION_FOR_BUTTON_HOLD;
+						if(SYSTEM_DELAY > 0) counterForButtonHold[i] /= SYSTEM_DELAY;
+					}
+					else {
+						counterForAutoIncreasing[NO_OF_BUTTONS] = DURATION_FOR_AUTO_INCREASING;
+						if(SYSTEM_DELAY > 0) counterForAutoIncreasing[i] /= SYSTEM_DELAY;
+					}
+
 					flagForButtonPressed[i] = 1;
+
+					//If the wait time is previously set
+					if(waitForSecondPress[i] > 0) {
+						flagForButtonDoublePressed[i] = 1;
+						waitForSecondPress[i] = 0;
+					}
+					else {
+						waitForSecondPress[i] = DURATION_FOR_DOUBLE_PRESS;
+						if(SYSTEM_DELAY > 0) waitForSecondPress[i] /= SYSTEM_DELAY;
+					}
+				}
+				else {
+					waitForSecondPress[i]--;
+					flagForButtonHold[index] = 0;
 				}
 			}
 			else {
-				counterForButtonHold[i]--;
-				if(counterForButtonHold[i] == 0) {
-					buttonBuffer[i] = BUTTON_IS_RELEASED;
+				if(buttonBuffer[i] == BUTTON_IS_PRESSED) {
+					if(!flagForButtonHold[i]) {
+						counterForButtonHold[i]--;
+						if(counterForButtonHold[i] == 0) {
+							flagForButtonHold[i] = 1;
+						}
+					}
+					else {
+						counterForAutoIncreasing[i]--;
+						if(counterForAutoIncreasing[i] == 0) {
+							buttonBuffer[i] = BUTTON_IS_RELEASED;
+						}
+					}
+				}
+				else {
+					waitForSecondPress[i]--;
 				}
 			}
 		}
 	}
 }
 
-int is_button_pressed(int index){
-	if(index < 0 || index > NO_OF_BUTTONS) return -1;
+int is_button_pressed(int index) {
+	if(index < 0 || index > NO_OF_BUTTONS) return 0;
 	if(flagForButtonPressed[index] == 1) {
 		flagForButtonPressed[index] = 0;
+		return 1;
+	}
+	return 0;
+}
+
+int is_button_double_pressed(int index) {
+	if(index < 0 || index > NO_OF_BUTTONS) return 0;
+	if(flagForButtonDoublePressed[index] == 1) {
+		flagForButtonDoublePressed[index] = 0;
+		return 1;
+	}
+	return 0;
+}
+
+int is_button_hold(int index) {
+	if(index < 0 || index > NO_OF_BUTTONS) return 0;
+	if(flagForButtonHold[index] == 1) {
 		return 1;
 	}
 	return 0;
