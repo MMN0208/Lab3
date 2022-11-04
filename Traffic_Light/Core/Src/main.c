@@ -90,13 +90,23 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
+  setTimer1(10);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  fsm_multi_mode_run();
+	  if(is_button_double_pressed(0)) {
+		  HAL_GPIO_TogglePin(RED_0_GPIO_Port, RED_0_Pin);
+	  }
+	  if(is_button_pressed(0)) {
+		  HAL_GPIO_TogglePin(YEL_0_GPIO_Port, YEL_0_Pin);
+	  }
+	  if(timer1_flag == 1 && is_button_hold(0)) {
+		  setTimer1(500);
+		  HAL_GPIO_TogglePin(GRN_0_GPIO_Port, GRN_0_Pin);
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

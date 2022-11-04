@@ -1,2 +1,4 @@
-../Core/Src/input_reading.c:42:6:button_reading	16	static
-../Core/Src/input_reading.c:66:5:is_button_pressed	16	static
+../Core/Src/input_reading.c:46:6:button_reading	16	static
+../Core/Src/input_reading.c:92:5:is_button_pressed	16	static
+../Core/Src/input_reading.c:101:5:is_button_double_pressed	16	static
+../Core/Src/input_reading.c:110:5:is_button_hold	16	static

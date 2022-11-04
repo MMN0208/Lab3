@@ -7,13 +7,10 @@
 #include "input_reading.h"
 //we aim to work with more than one buttons
 #define NO_OF_BUTTONS 				       3
-//timer interrupt duration is 10ms, so to pass 1 second,
-//time for auto-increasing
-#define DURATION_FOR_AUTO_INCREASING	   500
 //time to register hold
-#define DURATION_FOR_BUTTON_HOLD		   1000
+#define DURATION_FOR_BUTTON_HOLD		   500
 //time interval inbetween each press to detect double press
-#define DURATION_FOR_DOUBLE_PRESS		   500
+#define DURATION_FOR_DOUBLE_PRESS		   200
 #define BUTTON_IS_PRESSED                  GPIO_PIN_RESET
 #define BUTTON_IS_RELEASED                 GPIO_PIN_SET
 //the buffer that the final result is stored after
@@ -44,7 +41,6 @@ static uint8_t flagForButtonHold[NO_OF_BUTTONS];
 //we define counter for automatically increasing the value
 //after the button is pressed more than 1 second.
 static uint16_t counterForButtonHold[NO_OF_BUTTONS] = {0, 0, 0};
-static uint16_t counterForAutoIncreasing[NO_OF_BUTTONS] = {0, 0, 0};
 static uint16_t waitForSecondPress[NO_OF_BUTTONS] = {0, 0, 0};
 
 void button_reading(void){
@@ -56,19 +52,11 @@ void button_reading(void){
 			if(buttonBuffer[i] != debounceButtonBuffer0[i]) {
 				buttonBuffer[i] = debounceButtonBuffer0[i];
 				if(buttonBuffer[i] == BUTTON_IS_PRESSED) {
-					if(!flagButtonHold[i]) {
-						counterForButtonHold[i] = DURATION_FOR_BUTTON_HOLD;
-						if(SYSTEM_DELAY > 0) counterForButtonHold[i] /= SYSTEM_DELAY;
-					}
-					else {
-						counterForAutoIncreasing[NO_OF_BUTTONS] = DURATION_FOR_AUTO_INCREASING;
-						if(SYSTEM_DELAY > 0) counterForAutoIncreasing[i] /= SYSTEM_DELAY;
-					}
-
-					flagForButtonPressed[i] = 1;
+					counterForButtonHold[i] = DURATION_FOR_BUTTON_HOLD;
+					if(SYSTEM_DELAY > 0) counterForButtonHold[i] /= SYSTEM_DELAY;
 
 					//If the wait time is previously set
-					if(waitForSecondPress[i] > 0) {
+					if(waitForSecondPress[i] > 0 && waitForSecondPress[i] < DURATION_FOR_DOUBLE_PRESS / SYSTEM_DELAY) {
 						flagForButtonDoublePressed[i] = 1;
 						waitForSecondPress[i] = 0;
 					}
@@ -78,27 +66,23 @@ void button_reading(void){
 					}
 				}
 				else {
+					flagForButtonHold[i] = 0;
 					waitForSecondPress[i]--;
-					flagForButtonHold[index] = 0;
 				}
 			}
 			else {
 				if(buttonBuffer[i] == BUTTON_IS_PRESSED) {
-					if(!flagForButtonHold[i]) {
 						counterForButtonHold[i]--;
 						if(counterForButtonHold[i] == 0) {
 							flagForButtonHold[i] = 1;
+							waitForSecondPress[i] = 0;
 						}
-					}
-					else {
-						counterForAutoIncreasing[i]--;
-						if(counterForAutoIncreasing[i] == 0) {
-							buttonBuffer[i] = BUTTON_IS_RELEASED;
-						}
-					}
 				}
 				else {
 					waitForSecondPress[i]--;
+					if(waitForSecondPress[i] == 0) {
+						flagForButtonPressed[i] = 1;
+					}
 				}
 			}
 		}
