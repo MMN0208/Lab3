@@ -46,12 +46,12 @@ void fsm_multi_mode_run(void) {
 	case SN_RED__EW_GRN:
 		redLight(SOUTH_NORTH);
 		grnLight(EAST_WEST);
-		updateCountdownBuffer();
 		scan7SEG();
 
 		if(timer2_flag == 1) {
 			setTimer2(SECOND);
 			updateCountdown();
+			updateCountdownBuffer();
 		}
 
 		if(traffic_timer_flag == 1) {
@@ -73,12 +73,12 @@ void fsm_multi_mode_run(void) {
 	case SN_RED__EW_YEL:
 		redLight(SOUTH_NORTH);
 		yelLight(EAST_WEST);
-		updateCountdownBuffer();
 		scan7SEG();
 
 		if(timer2_flag == 1) {
 			setTimer2(SECOND);
 			updateCountdown();
+			updateCountdownBuffer();
 		}
 
 		if(traffic_timer_flag == 1) {
@@ -101,12 +101,12 @@ void fsm_multi_mode_run(void) {
 	case SN_GRN__EW_RED:
 		grnLight(SOUTH_NORTH);
 		redLight(EAST_WEST);
-		updateCountdownBuffer();
 		scan7SEG();
 
 		if(timer2_flag == 1) {
 			setTimer2(SECOND);
 			updateCountdown();
+			updateCountdownBuffer();
 		}
 
 		if(traffic_timer_flag == 1) {
@@ -128,12 +128,12 @@ void fsm_multi_mode_run(void) {
 	case SN_YEL__EW_RED:
 		yelLight(SOUTH_NORTH);
 		redLight(EAST_WEST);
-		updateCountdownBuffer();
 		scan7SEG();
 
 		if(timer2_flag == 1) {
 			setTimer2(SECOND);
 			updateCountdown();
+			updateCountdownBuffer();
 		}
 
 		if(traffic_timer_flag == 1) {
@@ -187,7 +187,7 @@ void fsm_multi_mode_run(void) {
 		scan7SEG();
 
 		if(traffic_timer_flag == 1) {
-			setTrafficTimer(LED_BLINK);
+			setTimer1(TIMER_INIT);
 			grnBlink();
 		}
 
